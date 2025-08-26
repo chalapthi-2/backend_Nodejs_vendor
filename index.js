@@ -10,7 +10,7 @@ const path =require('path');
 
 const app = express();
 
-const PORT = 5000;
+const PORT =  process.env.PORT || 5000;
 
 dotEnv.config();
 
@@ -31,6 +31,6 @@ mongoose
 
 app.listen(5000, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
 
-app.get("/home", (req, res) => {
+app.get("/", (req, res) => {
   res.send("<h1> welcome to the Home Page");
 });
