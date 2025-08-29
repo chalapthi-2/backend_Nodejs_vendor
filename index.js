@@ -6,6 +6,7 @@ const bodyparser = require('body-parser');
 const firmRoutes = require('./routes/firmRoutes');
 const productRoutes = require('./routes/productRoutes');
 const path =require('path');
+const cors =require('cors');
 
 
 const app = express();
@@ -13,6 +14,9 @@ const app = express();
 const PORT =  process.env.PORT || 5000;
 
 dotEnv.config();
+//middleware
+app.use(cors())
+app.use(express.json());
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -23,7 +27,10 @@ mongoose
    app.use('/vendor',vendorRoutes);
    app.use('/firm',firmRoutes)
    app.use('/product',productRoutes);
-   app.use('/uploads',express.static('uploads'))
+   //app.use('/uploads',express.static('uploads'))
+
+//    // serve uploaded images
+ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // app.listen(PORT, () => {
 //   console.log(`server started and running at ${PORT}`);
